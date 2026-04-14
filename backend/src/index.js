@@ -6,7 +6,7 @@ import connectDB from "./db/index.js";
 
 // routes
 import authRoutes from "./routes/auth.routes.js";
-// import faqRoutes from "./routes/faq.routes.js";
+import faqRoutes from "./routes/faq.routes.js";
 import contentRoutes from "./routes/content.routes.js";
 // import amenityRoutes from "./routes/amenity.routes.js";
 // import constructionRoutes from "./routes/construction.routes.js";
@@ -44,7 +44,7 @@ connectDB();
 
 // ✅ routes
 app.use("/api/auth", authRoutes);
-// app.use("/api/faqs", faqRoutes);
+app.use("/api/faqs", faqRoutes);
 app.use("/api/content", contentRoutes);
 // app.use("/api/amenities", amenityRoutes);
 // app.use("/api/construction", constructionRoutes);

@@ -1,51 +1,55 @@
-import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
+import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
-  const { login } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleLogin = async () => {
     try {
-      await login(form.email, form.password);
+      await API.post("/auth/login", { email, password });
       navigate("/admin/dashboard");
-    } catch (err) {
+    } catch (error) {
       alert("Invalid credentials");
     }
   };
 
   return (
-    <div style={{ padding: "40px" }}>
-      <h2>Admin Login</h2>
+    <div className="h-screen flex items-center justify-center bg-gray-100">
 
-      <form onSubmit={handleSubmit}>
+      <div className="bg-white p-8 rounded-xl shadow w-80">
+
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Admin Login
+        </h2>
+
         <input
+          type="email"
           placeholder="Email"
-          onChange={(e) =>
-            setForm({ ...form, email: e.target.value })
-          }
+          className="w-full border p-2 mb-4"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        <br /><br />
 
         <input
           type="password"
           placeholder="Password"
-          onChange={(e) =>
-            setForm({ ...form, password: e.target.value })
-          }
+          className="w-full border p-2 mb-4"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <br /><br />
 
-        <button type="submit">Login</button>
-      </form>
+        <button
+          onClick={handleLogin}
+          className="w-full bg-blue-500 text-white py-2 rounded"
+        >
+          Login
+        </button>
+
+      </div>
+
     </div>
   );
 };
